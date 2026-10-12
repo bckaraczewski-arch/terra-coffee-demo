@@ -1,1 +1,1549 @@
-PLACEHOLDER
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#C17A4A">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="imagine_images/7BTGC.jpg">
+<title>Terra Coffee</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F6F1E9;
+    --surface: #FFFFFF;
+    --text: #2C2416;
+    --muted: #8A7E70;
+    --primary: #D4B896;
+    --primary-dark: #C4A882;
+    --secondary: #6B8E6B;
+    --accent: #C17A4A;
+    --border: #EDE4D8;
+    --card-shadow: 0 4px 16px rgba(44, 36, 22, 0.06);
+  }
+  [data-theme="dark"] {
+    --bg: #1A1612;
+    --surface: #262019;
+    --text: #F5F0E8;
+    --muted: #A89F91;
+    --primary: #C4A882;
+    --primary-dark: #D4B896;
+    --secondary: #8BAF8B;
+    --accent: #D48A5A;
+    --border: #3A3228;
+    --card-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: #111;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text);
+    padding: 20px;
+    transition: background 0.3s, color 0.3s;
+    margin: 0;
+  }
+  .phone-frame {
+    width: 390px;
+    height: 844px;
+    background: var(--bg);
+    border-radius: 48px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.4), inset 0 0 0 2px #333;
+    overflow: hidden;
+    position: relative;
+    border: 10px solid #1a1a1a;
+  }
+  .dynamic-island {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 34px;
+    background: #000;
+    border-radius: 20px;
+    z-index: 50;
+    pointer-events: none;
+  }
+  .status-bar {
+    height: 54px;
+    background: transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 28px 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    position: relative;
+    z-index: 40;
+  }
+  .status-left { font-weight: 700; letter-spacing: -0.3px; }
+  .status-right { display: flex; gap: 6px; align-items: center; font-size: 13px; }
+  .app-header {
+    padding: 8px 16px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .brand img {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+  .brand h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary);
+  }
+  .brand .tagline { font-size: 10px; color: var(--secondary); letter-spacing: 0.5px; }
+  .header-actions { display: flex; gap: 8px; align-items: center; }
+  .icon-btn {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1a1a1a;
+  }
+  [data-theme="dark"] .icon-btn { color: #f5ede4; }
+  .content {
+    height: calc(100% - 54px - 70px - 56px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .content::-webkit-scrollbar { width: 0; }
+  .screen { display: none; padding: 16px; }
+  .screen.active { display: block; }
+  .search-bar {
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    border: none;
+    box-shadow: var(--card-shadow);
+  }
+  .search-bar input {
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-family: inherit;
+    flex: 1;
+    outline: none;
+    font-size: 15px;
+  }
+  .categories {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+  .categories::-webkit-scrollbar { height: 0; }
+  .cat-btn {
+    background: var(--surface);
+    border: none;
+    color: var(--muted);
+    padding: 10px 18px;
+    border-radius: 24px;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  .cat-btn.active {
+    background: var(--primary);
+    color: var(--text);
+  }
+  .product-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .product-card {
+    background: var(--surface);
+    border-radius: 20px;
+    overflow: hidden;
+    border: none;
+    cursor: pointer;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.15s ease;
+  }
+  .product-card:active { transform: scale(0.98); }
+  .product-card img {
+    width: 100%;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 16px 16px 0 0;
+  }
+  .product-info { padding: 10px 12px 12px; }
+  .product-info h3 { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+  .product-info .price { color: var(--text); font-weight: 700; font-size: 14px; }
+  .add-btn {
+    background: var(--primary);
+    color: var(--text);
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-weight: 600;
+    cursor: pointer;
+    float: right;
+    margin-top: -2px;
+    font-size: 16px;
+  }
+  /* Modal */
+  .modal {
+    display: none;
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 100;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .modal.active { display: flex; }
+  .modal-content {
+    background: var(--surface);
+    width: 100%;
+    border-radius: 28px 28px 0 0;
+    padding: 20px;
+    max-height: 88%;
+    overflow-y: auto;
+    animation: slideUp 0.3s ease;
+  }
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  .modal-content img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 14px;
+    margin-bottom: 14px;
+  }
+  .modal-content h2 { font-family: 'Playfair Display', serif; font-size: 22px; margin-bottom: 6px; }
+  .modal-content .price { font-size: 20px; color: var(--primary); font-weight: 700; margin-bottom: 10px; }
+  .modal-content p { color: var(--muted); line-height: 1.5; margin-bottom: 14px; font-size: 14px; }
+  .size-options, .option-group { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  .option-label { font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--muted); width: 100%; }
+  .option-btn, .size-btn {
+    padding: 9px 12px;
+    background: var(--bg);
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    font-size: 13px;
+    flex: 1;
+    min-width: 70px;
+  }
+  .option-btn.selected, .size-btn.selected { border-color: var(--primary); background: rgba(193,122,74,0.12); }
+  .custom-summary { font-size: 13px; color: var(--muted); margin: 8px 0; min-height: 18px; }
+  .qty-row { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+  .qty-btn {
+    width: 34px; height: 34px; border-radius: 50%; background: var(--bg); border: 1px solid var(--border); color: var(--text); font-size: 18px; cursor: pointer;
+  }
+  .add-to-cart-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--primary);
+    border: none;
+    border-radius: 14px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  /* Cart */
+  .cart-item {
+    display: flex;
+    gap: 12px;
+    background: var(--surface);
+    padding: 12px;
+    border-radius: 14px;
+    margin-bottom: 10px;
+    align-items: center;
+    border: 1px solid var(--border);
+  }
+  .cart-item img { width: 64px; height: 64px; object-fit: cover; border-radius: 10px; }
+  .cart-item-info { flex: 1; }
+  .cart-item-info h4 { font-size: 14px; }
+  .cart-item-info .item-price { color: var(--primary); font-weight: 600; font-size: 13px; }
+  .cart-total {
+    background: var(--surface);
+    padding: 14px;
+    border-radius: 14px;
+    margin: 14px 0;
+    display: flex;
+    justify-content: space-between;
+    font-size: 17px;
+    font-weight: 700;
+    border: 1px solid var(--border);
+  }
+  /* Payment & Success */
+  .payment-method {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+  }
+  .payment-method.selected { border-color: var(--primary); background: rgba(193,122,74,0.08); }
+  .payment-method input { margin-right: 4px; }
+  .card-form { display: none; margin-top: 12px; }
+  .card-form.active { display: block; }
+  .card-form input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    margin-bottom: 10px;
+    font-family: inherit;
+  }
+  .pay-btn {
+    width: 100%;
+    padding: 15px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 12px;
+  }
+  .success-screen {
+    text-align: center;
+    padding: 40px 20px;
+  }
+  .success-screen h2 { font-family: 'Playfair Display', serif; font-size: 28px; margin: 16px 0 8px; color: var(--secondary); }
+  .success-icon { font-size: 64px; margin-bottom: 10px; }
+  .order-summary-mini { background: var(--surface); border-radius: 14px; padding: 14px; margin: 16px 0; text-align: left; border: 1px solid var(--border); }
+  /* Rewards */
+  .points {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--primary);
+    font-family: 'Playfair Display', serif;
+  }
+  .stamps {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin: 14px 0;
+    flex-wrap: wrap;
+  }
+  .stamp {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    background: var(--bg);
+  }
+  .stamp.filled { background: var(--primary); color: white; }
+  .loyalty-img {
+    width: 100%;
+    border-radius: 14px;
+    margin: 10px 0;
+    border: 1px solid var(--border);
+  }
+  /* Stores */
+  .store-card {
+    background: var(--surface);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 14px;
+    border: 1px solid var(--border);
+    box-shadow: var(--card-shadow);
+  }
+  .store-card img { width: 100%; height: 130px; object-fit: cover; }
+  .store-info { padding: 12px; }
+  .store-info h3 { font-size: 15px; margin-bottom: 4px; }
+  .store-info p { font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+  .open-badge {
+    display: inline-block;
+    background: var(--secondary);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 8px;
+    margin-right: 6px;
+  }
+  .directions-btn {
+    display: inline-block;
+    background: var(--primary);
+    color: var(--text);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+  }
+  .maps-modal {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    display: none;
+    z-index: 200;
+    align-items: flex-end;
+  }
+  .maps-modal.active { display: flex; }
+  .maps-sheet {
+    background: var(--surface);
+    width: 100%;
+    border-radius: 24px 24px 0 0;
+    padding: 20px;
+  }
+  .maps-sheet h3 { margin-bottom: 12px; font-size: 18px; }
+  .map-option {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 8px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    text-align: left;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  /* Bottom Nav */
+  .bottom-nav {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 72px;
+    background: var(--surface);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: none;
+    padding-bottom: 8px;
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.04);
+  }
+  .nav-item.active { color: var(--text); }
+  .nav-item { color: var(--muted); }
+  .nav-item svg { width: 22px; height: 22px; }
+  .cart-badge {
+    position: absolute;
+    top: -5px;
+    right: -6px;
+    background: var(--accent);
+    color: white;
+    font-size: 10px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+  }
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--muted);
+  }
+  /* Login */
+  .login-form {
+    max-width: 100%;
+    padding: 10px 0;
+  }
+  .login-form h2 {
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 8px;
+    font-size: 26px;
+  }
+  .login-form p { color: var(--muted); margin-bottom: 20px; font-size: 14px; }
+  .form-group { margin-bottom: 14px; }
+  .form-group label { display: block; font-size: 13px; margin-bottom: 6px; color: var(--muted); }
+  .form-group input {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 15px;
+  }
+  .login-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 8px;
+  }
+  .guest-btn {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+    border-radius: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  /* Order history */
+  .order-card {
+    background: var(--surface);
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 12px;
+    border: 1px solid var(--border);
+  }
+  .order-card h4 { font-size: 14px; margin-bottom: 4px; }
+  .order-card .date { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+  .order-item { font-size: 13px; color: var(--text); margin: 2px 0; }
+  .order-total { font-weight: 700; color: var(--primary); margin-top: 8px; }
+  .user-info {
+    background: var(--surface);
+    padding: 16px;
+    border-radius: 14px;
+    margin-bottom: 16px;
+    border: 1px solid var(--border);
+    text-align: center;
+  }
+  .user-info .name { font-size: 18px; font-weight: 600; }
+  .user-info .email { font-size: 13px; color: var(--muted); }
+  .logout-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 8px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 13px;
+  }
+  .checkout-btn, .login-btn, .pay-btn, .add-to-cart-btn {
+    width: 100%;
+    background: var(--primary);
+    color: var(--text);
+    border: none;
+    padding: 16px;
+    border-radius: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 12px;
+  }
+  .checkout-btn:active, .login-btn:active, .pay-btn:active, .add-to-cart-btn:active {
+    transform: scale(0.98);
+  }
+  .success-toast {
+    position: absolute;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--secondary);
+    color: white;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    display: none;
+    z-index: 200;
+  }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <div class="dynamic-island"></div>
+  <div class="status-bar">
+    <span class="status-left" id="status-time">9:41</span>
+    <span class="status-right">
+      <span>5G</span>
+      <span>●●●●</span>
+      <span>🔋</span>
+    </span>
+  </div>
+  <div class="app-header">
+    <div class="brand">
+      <img src="imagine_images/7BTGC.jpg" alt="Terra Coffee Logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2242%22 height=%2242%22><rect width=%2242%22 height=%2242%22 rx=%2210%22 fill=%22%23C17A4A%22/><text x=%2221%22 y=%2228%22 font-size=%2218%22 text-anchor=%22middle%22 fill=%22white%22>T</text></svg>'">
+      <div>
+        <h1>TERRA</h1>
+        <div class="tagline">COFFEE · NATURE · MOMENT</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" id="theme-toggle" title="Toggle theme" aria-label="Toggle theme">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/>
+          <line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/>
+          <line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+      </button>
+      <button class="icon-btn" id="account-btn" title="Account" aria-label="Account">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div class="content">
+    <!-- LOGIN SCREEN -->
+    <div id="login-screen" class="screen">
+      <div class="login-form">
+        <h2>Welcome back</h2>
+        <p>Sign in to view order history and earn rewards.</p>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="login-email" placeholder="you@example.com" value="alex@terra.coffee">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="login-password" placeholder="••••••••" value="demo">
+        </div>
+        <button class="login-btn" id="login-submit">Sign In</button>
+        <button class="guest-btn" id="guest-btn">Continue as Guest</button>
+        <p style="text-align:center; margin-top:16px; font-size:13px;">
+          Don't have an account? <a href="#" id="show-signup" style="color:var(--primary); font-weight:600; text-decoration:none;">Create one</a>
+        </p>
+        <p style="text-align:center; margin-top:8px; font-size:12px; color:var(--muted);">Demo: any email + password works</p>
+      </div>
+    </div>
+
+    <!-- SIGNUP SCREEN -->
+    <div id="signup-screen" class="screen">
+      <div class="login-form">
+        <h2>Create Account</h2>
+        <p>Join Terra Coffee to track orders and earn rewards.</p>
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="signup-name" placeholder="Alex Terra">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="signup-email" placeholder="you@example.com">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="signup-password" placeholder="At least 6 characters">
+        </div>
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <input type="password" id="signup-confirm" placeholder="Repeat password">
+        </div>
+        <button type="button" class="login-btn" id="signup-submit">Create Account</button>
+        <p style="text-align:center; margin-top:16px; font-size:13px;">
+          Already have an account? <a href="#" id="show-login" style="color:var(--primary); font-weight:600; text-decoration:none;">Sign in</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- ONBOARDING SCREEN -->
+    <div id="onboard-screen" class="screen active">
+      <div style="text-align:center; padding:20px 16px 30px;">
+        <div style="width:100%; height:320px; border-radius:28px; overflow:hidden; margin-bottom:28px; background:#F5EDE4;">
+          <img src="imagine_images/ftz8T.jpg" alt="" style="width:100%; height:100%; object-fit:cover;" onerror="this.style.display='none'">
+        </div>
+        <h1 style="font-family:'Playfair Display',serif; font-size:36px; line-height:1.05; margin-bottom:12px; font-weight:600;">Coffee<br>Made Easy</h1>
+        <p style="color:var(--muted); font-size:15px; margin-bottom:36px; max-width:240px; margin-left:auto; margin-right:auto; line-height:1.4;">Order your favorite coffee in seconds with ease and simplicity.</p>
+        <button class="checkout-btn" id="get-started" style="max-width:260px; margin:0 auto; border-radius:24px; padding:16px;">Get Started</button>
+      </div>
+    </div>
+
+    <!-- MENU SCREEN -->
+    <div id="menu-screen" class="screen">
+      <div style="margin-bottom:14px; display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <div style="font-size:13px; color:var(--muted);">Welcome,</div>
+          <div style="font-size:18px; font-weight:600;">Devon Lane</div>
+        </div>
+        <div class="icon-btn" style="width:40px; height:40px; border-radius:50%;">🔔</div>
+      </div>
+      <div class="search-bar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="text" placeholder="Search drinks & bites..." id="search">
+      </div>
+      <div class="promo" style="background:#F0E6D8; border-radius:22px; padding:18px; margin-bottom:18px; display:flex; justify-content:space-between; align-items:center; position:relative; overflow:hidden;">
+        <div>
+          <div style="font-size:12px; color:var(--muted); font-weight:500;">Today Only</div>
+          <div style="font-size:22px; font-weight:700; margin:2px 0;">50% OFF</div>
+          <div style="font-size:12px; color:var(--muted);">Super Discount</div>
+          <button style="margin-top:10px; background:var(--primary); border:none; padding:8px 16px; border-radius:20px; font-size:13px; font-weight:600; cursor:pointer;">Book Now</button>
+        </div>
+        <div style="width:100px; height:100px; border-radius:16px; overflow:hidden;">
+          <img src="imagine_images/MQu9I.jpg" alt="" style="width:100%; height:100%; object-fit:cover;" onerror="this.style.display='none'">
+        </div>
+      </div>
+      <div class="categories">
+        <button class="cat-btn active" data-cat="all">All</button>
+        <button class="cat-btn" data-cat="Coffee">Coffee</button>
+        <button class="cat-btn" data-cat="Cold">Cold</button>
+        <button class="cat-btn" data-cat="Tea">Tea</button>
+        <button class="cat-btn" data-cat="Food">Food</button>
+      </div>
+      <div class="product-grid" id="product-grid"></div>
+    </div>
+
+    <!-- CART SCREEN -->
+    <div id="cart-screen" class="screen">
+      <h2 style="margin-bottom:14px; font-family:'Playfair Display',serif; font-size:22px;">Your Order</h2>
+      <div id="cart-items"></div>
+      <div id="cart-empty" class="empty-state" style="display:none;">
+        <p>Your cart is empty</p>
+        <p style="font-size:13px; margin-top:6px;">Add something warm & earthy</p>
+      </div>
+      <div class="cart-total" id="cart-total-row" style="display:none;">
+        <span>Total</span>
+        <span id="cart-total">$0.00</span>
+      </div>
+      <button class="checkout-btn" id="checkout-btn" style="display:none;">Proceed to Payment</button>
+    </div>
+
+    <!-- PAYMENT SCREEN -->
+    <div id="payment-screen" class="screen">
+      <h2 style="margin-bottom:16px; font-family:'Playfair Display',serif; font-size:22px;">Payment</h2>
+      <div id="payment-summary" class="order-summary-mini"></div>
+      <div class="payment-method selected" data-method="card">
+        <input type="radio" name="pay" checked> Credit / Debit Card
+      </div>
+      <div class="payment-method" data-method="apple">
+        <input type="radio" name="pay"> Apple Pay
+      </div>
+      <div class="payment-method" data-method="google">
+        <input type="radio" name="pay"> Google Pay
+      </div>
+      <div class="card-form active" id="card-form">
+        <input type="text" placeholder="Card number" value="4242 4242 4242 4242" id="card-number">
+        <div style="display:flex; gap:10px;">
+          <input type="text" placeholder="MM/YY" value="12/28" style="flex:1;">
+          <input type="text" placeholder="CVC" value="123" style="flex:1;">
+        </div>
+        <input type="text" placeholder="Name on card" value="Alex Terra">
+      </div>
+      <button class="pay-btn" id="pay-btn">Pay Now</button>
+      <button style="width:100%; margin-top:8px; background:transparent; border:none; color:var(--muted); padding:10px; cursor:pointer;" onclick="showScreen('cart')">Back to Cart</button>
+    </div>
+
+    <!-- SUCCESS SCREEN -->
+    <div id="success-screen" class="screen">
+      <div class="success-screen">
+        <div class="success-icon">✓</div>
+        <h2>Order Confirmed!</h2>
+        <p style="color:var(--muted); margin-bottom:16px;">Your Terra Coffee is being prepared.</p>
+        <div id="success-details" class="order-summary-mini"></div>
+        <button class="pay-btn" onclick="showScreen('menu')">Back to Menu</button>
+        <button style="width:100%; margin-top:8px; background:transparent; border:1px solid var(--border); color:var(--text); padding:12px; border-radius:12px; cursor:pointer;" onclick="showScreen('account')">View Order History</button>
+      </div>
+    </div>
+
+    <!-- REWARDS SCREEN -->
+    <div id="rewards-screen" class="screen">
+      <div style="text-align:center; margin-bottom:16px;">
+        <div style="font-size:13px; color:var(--muted);">YOUR POINTS</div>
+        <div class="points" id="points-display">420</div>
+        <div style="font-size:13px; color:var(--secondary);" id="points-to-free">80 pts to free drink</div>
+      </div>
+
+      <div style="background:var(--surface); border-radius:20px; padding:20px; text-align:center; margin-bottom:18px; border:1px solid var(--border);">
+        <h3 style="margin-bottom:6px; font-size:16px;">Scan to Earn</h3>
+        <p style="font-size:13px; color:var(--muted); margin-bottom:14px;">Show this code at the store to earn points</p>
+        <div id="qr-code" style="width:160px; height:160px; margin:0 auto 12px; background:#fff; border-radius:12px; display:flex; align-items:center; justify-content:center; border:1px solid var(--border);">
+          <svg width="140" height="140" viewBox="0 0 100 100" style="display:block;">
+            <rect width="100" height="100" fill="#fff"/>
+            <g fill="#1a1a1a">
+              <rect x="10" y="10" width="20" height="20"/><rect x="70" y="10" width="20" height="20"/>
+              <rect x="10" y="70" width="20" height="20"/>
+              <rect x="35" y="35" width="8" height="8"/><rect x="50" y="35" width="8" height="8"/>
+              <rect x="35" y="50" width="8" height="8"/><rect x="50" y="50" width="8" height="8"/>
+              <rect x="65" y="50" width="8" height="8"/><rect x="35" y="65" width="8" height="8"/>
+              <rect x="15" y="40" width="6" height="6"/><rect x="80" y="40" width="6" height="6"/>
+              <rect x="40" y="15" width="6" height="6"/><rect x="40" y="80" width="6" height="6"/>
+            </g>
+          </svg>
+        </div>
+        <div style="font-size:11px; color:var(--muted); margin-bottom:12px;" id="member-id">Member ID: TERRA-4201</div>
+        <button class="checkout-btn" id="simulate-scan" style="padding:12px; font-size:14px; border-radius:12px;">Simulate Store Scan (+25 pts)</button>
+      </div>
+
+      <h3 style="margin:14px 0 6px;">Stamp Card</h3>
+      <p style="font-size:13px; color:var(--muted); margin-bottom:10px;">Buy 8 drinks, get 1 free</p>
+      <div class="stamps" id="stamps"></div>
+    </div>
+
+    <!-- STORES SCREEN -->
+    <div id="stores-screen" class="screen">
+      <h2 style="margin-bottom:14px; font-family:'Playfair Display',serif; font-size:22px;">Our Locations</h2>
+      <div class="store-card">
+        <img src="imagine_images/2KiHQ.jpg" alt="Downtown">
+        <div class="store-info">
+          <h3>Terra Coffee · Downtown</h3>
+          <p>123 Oak Street, Nashville, TN</p>
+          <p>Open daily 7AM – 7PM</p>
+          <span class="open-badge">OPEN NOW</span>
+          <button class="directions-btn" onclick="openDirections('123 Oak Street, Nashville, TN', 'Terra Coffee Downtown')">DIRECTIONS</button>
+        </div>
+      </div>
+      <div class="store-card">
+        <img src="imagine_images/2KiHQ.jpg" alt="Midtown">
+        <div class="store-info">
+          <h3>Terra Coffee · Midtown</h3>
+          <p>456 Ember Ave, Nashville, TN</p>
+          <p>Open daily 6:30AM – 6:30PM</p>
+          <span class="open-badge">OPEN NOW</span>
+          <button class="directions-btn" onclick="openDirections('456 Ember Ave, Nashville, TN', 'Terra Coffee Midtown')">DIRECTIONS</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACCOUNT / HISTORY SCREEN -->
+    <div id="account-screen" class="screen">
+      <div class="user-info" id="user-info">
+        <div class="name" id="user-name">Guest</div>
+        <div class="email" id="user-email">Sign in to track orders</div>
+        <button class="logout-btn" id="logout-btn" style="display:none;">Sign Out</button>
+      </div>
+      <h3 style="margin-bottom:12px;">Order History</h3>
+      <div id="order-history"></div>
+      <div id="no-orders" class="empty-state">No orders yet. Place your first order!</div>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <div class="nav-item active" data-screen="menu">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+      Menu
+    </div>
+    <div class="nav-item" data-screen="cart">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1 1 0 0020 4H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+      Cart
+      <span class="cart-badge" id="cart-badge" style="display:none;">0</span>
+    </div>
+    <div class="nav-item" data-screen="rewards">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      Rewards
+    </div>
+    <div class="nav-item" data-screen="stores">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+      Stores
+    </div>
+  </div>
+</div>
+
+<!-- Product Detail Modal -->
+<div class="modal" id="product-modal">
+  <div class="modal-content">
+    <img id="modal-img" src="" alt="">
+    <h2 id="modal-name"></h2>
+    <div class="price" id="modal-price"></div>
+    <p id="modal-desc"></p>
+    <div class="option-group" id="size-group">
+      <div class="option-label">Size</div>
+      <div class="size-btn selected" data-size="Regular" data-mod="0">Regular</div>
+      <div class="size-btn" data-size="Large" data-mod="1">Large +$1</div>
+    </div>
+    <div class="option-group" id="milk-group">
+      <div class="option-label">Milk</div>
+      <div class="option-btn selected" data-milk="Whole" data-mod="0">Whole</div>
+      <div class="option-btn" data-milk="Oat" data-mod="0.5">Oat +$0.50</div>
+      <div class="option-btn" data-milk="Almond" data-mod="0.5">Almond +$0.50</div>
+      <div class="option-btn" data-milk="Soy" data-mod="0.5">Soy +$0.50</div>
+    </div>
+    <div class="option-group" id="sweet-group">
+      <div class="option-label">Sweetener</div>
+      <div class="option-btn selected" data-sweet="None" data-mod="0">None</div>
+      <div class="option-btn" data-sweet="Sugar" data-mod="0">Sugar</div>
+      <div class="option-btn" data-sweet="Honey" data-mod="0.25">Honey +$0.25</div>
+      <div class="option-btn" data-sweet="Vanilla" data-mod="0.75">Vanilla +$0.75</div>
+    </div>
+    <div class="option-group" id="temp-group">
+      <div class="option-label">Temperature</div>
+      <div class="option-btn selected" data-temp="Hot">Hot</div>
+      <div class="option-btn" data-temp="Iced">Iced</div>
+    </div>
+    <div class="custom-summary" id="custom-summary">Regular · Whole Milk · Hot</div>
+    <div class="qty-row">
+      <button class="qty-btn" id="qty-minus">−</button>
+      <span id="qty-display" style="font-size:18px; font-weight:700;">1</span>
+      <button class="qty-btn" id="qty-plus">+</button>
+    </div>
+    <button class="add-to-cart-btn" id="modal-add">Add to Cart</button>
+    <button style="width:100%; margin-top:8px; background:transparent; border:none; color:var(--muted); padding:10px; cursor:pointer;" onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<div class="success-toast" id="toast">Added to cart</div>
+
+<div class="maps-modal" id="maps-modal">
+  <div class="maps-sheet">
+    <h3>Open in Maps</h3>
+    <button class="map-option" onclick="openMapApp('apple')">Apple Maps</button>
+    <button class="map-option" onclick="openMapApp('google')">Google Maps</button>
+    <button class="map-option" onclick="openMapApp('waze')">Waze</button>
+    <button class="map-option" onclick="closeMaps()" style="background:transparent; border:none; color:var(--muted); text-align:center;">Cancel</button>
+  </div>
+</div>
+
+<!-- Splash / Launch Screen -->
+<div id="splash" style="position:fixed; inset:0; background:#F8F4EF; display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:1000; transition:opacity 0.5s;">
+  <img src="imagine_images/7BTGC.jpg" alt="Terra" style="width:120px; height:120px; border-radius:28px; margin-bottom:16px; box-shadow:0 10px 30px rgba(0,0,0,0.15);">
+  <h1 style="font-family:'Playfair Display',serif; color:#C17A4A; font-size:32px; margin:0;">TERRA</h1>
+  <p style="color:#6B8E6B; letter-spacing:1px; margin-top:4px;">COFFEE · NATURE · MOMENT</p>
+</div>
+
+<script>
+// Native shell: update time, hide splash, PWA
+function updateTime() {
+  const now = new Date();
+  document.getElementById('status-time').textContent = now.toLocaleTimeString([], {hour: 'numeric', minute:'2-digit'});
+}
+updateTime();
+setInterval(updateTime, 30000);
+
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const splash = document.getElementById('splash');
+    if (splash) {
+      splash.style.opacity = '0';
+      setTimeout(() => splash.remove(), 500);
+    }
+  }, 1200);
+});
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+</script>
+
+<script>
+const products = [
+  { id: 1, name: "Signature Latte", price: 5.50, image: "imagine_images/ibqXI.jpg", category: "Coffee", desc: "Smooth espresso with steamed milk and beautiful latte art. Our house favorite." },
+  { id: 2, name: "Iced Cold Brew", price: 4.75, image: "imagine_images/5C73o.jpg", category: "Cold", desc: "Slow-steeped 18 hours for a smooth, bold, and refreshing cup." },
+  { id: 3, name: "Matcha Latte", price: 6.00, image: "imagine_images/hOA6L.jpg", category: "Coffee", desc: "Ceremonial-grade matcha with creamy oat milk and delicate foam art." },
+  { id: 4, name: "Butter Croissant", price: 4.25, image: "imagine_images/MVS7Q.jpg", category: "Food", desc: "Flaky, buttery layers baked fresh every morning." },
+  { id: 5, name: "Classic Cappuccino", price: 5.00, image: "imagine_images/pHLtf.jpg", category: "Coffee", desc: "Equal parts espresso, milk, and thick foam with a dusting of cocoa." },
+  { id: 6, name: "Double Espresso", price: 3.50, image: "imagine_images/cYV6u.jpg", category: "Coffee", desc: "Pure, intense shot of our signature roast." },
+  { id: 7, name: "Avocado Toast", price: 9.50, image: "imagine_images/dgB6l.jpg", category: "Food", desc: "Smashed avocado on sourdough with poached egg and chili flakes." },
+  { id: 8, name: "Chai Latte", price: 5.25, image: "imagine_images/OXoIa.jpg", category: "Tea", desc: "Spiced chai with steamed milk, finished with cinnamon." },
+  { id: 9, name: "Blueberry Muffin", price: 4.00, image: "imagine_images/oPNEg.jpg", category: "Food", desc: "Soft, bakery-style muffin bursting with blueberries." },
+  { id: 10, name: "Pour-Over Drip", price: 4.50, image: "imagine_images/dGSG4.jpg", category: "Coffee", desc: "Hand-poured single-origin drip, bright and clean." },
+  { id: 11, name: "Iced Latte", price: 5.75, image: "imagine_images/AWI5e.jpg", category: "Cold", desc: "Espresso and milk over ice, smooth and refreshing." },
+  { id: 12, name: "Chocolate Chip Cookie", price: 3.50, image: "imagine_images/sVbPE.jpg", category: "Food", desc: "Soft-baked cookie loaded with dark chocolate chunks." },
+  { id: 13, name: "Ceremonial Matcha", price: 6.25, image: "imagine_images/lMTTA.jpg", category: "Tea", desc: "Whisked ceremonial matcha with delicate foam art." },
+  { id: 14, name: "Almond Croissant", price: 4.75, image: "imagine_images/2a2fC.jpg", category: "Food", desc: "Flaky croissant filled with almond cream and topped with sliced almonds." },
+  { id: 15, name: "Chocolate Croissant", price: 4.50, image: "imagine_images/9mSk3.jpg", category: "Food", desc: "Buttery croissant with a rich dark chocolate filling." },
+  { id: 16, name: "Honey Lavender Latte", price: 6.00, image: "imagine_images/kXjAV.jpg", category: "Coffee", desc: "Espresso and steamed milk with honey and a touch of lavender." },
+  { id: 17, name: "Classic Cappuccino", price: 5.00, image: "imagine_images/QD59b.jpg", category: "Coffee", desc: "Equal parts espresso, steamed milk, and thick foam with cocoa." },
+  { id: 18, name: "Cortado", price: 4.25, image: "imagine_images/b3dVE.jpg", category: "Coffee", desc: "Equal parts espresso and steamed milk in a small glass." },
+  { id: 19, name: "Flat White", price: 5.25, image: "imagine_images/YDlMS.jpg", category: "Coffee", desc: "Velvety microfoam over espresso with simple latte art." },
+  { id: 20, name: "Cinnamon Roll", price: 4.50, image: "imagine_images/JoqQG.jpg", category: "Food", desc: "Soft, flaky cinnamon roll finished with cream cheese icing." },
+  { id: 21, name: "Iced Matcha", price: 5.75, image: "imagine_images/wMz7Z.jpg", category: "Cold", desc: "Ceremonial matcha shaken with ice and a touch of sweetness." },
+  { id: 22, name: "Breakfast Sandwich", price: 8.50, image: "imagine_images/LL341.jpg", category: "Food", desc: "Egg and melted cheese on toasted sourdough." },
+  { id: 23, name: "Mocha", price: 5.75, image: "imagine_images/8UBMA.jpg", category: "Coffee", desc: "Espresso, steamed milk, and rich chocolate with a drizzle on top." }
+];
+
+let cart = [];
+let currentProduct = null;
+let selectedSize = "Regular";
+let selectedSizeMod = 0;
+let selectedMilk = "Whole";
+let selectedMilkMod = 0;
+let selectedSweet = "None";
+let selectedSweetMod = 0;
+let selectedTemp = "Hot";
+let qty = 1;
+let currentUser = null;
+let orders = [];
+let pendingOrder = null;
+
+// Theme
+function loadTheme() {
+  const theme = localStorage.getItem('terra-theme') || 'light';
+  document.documentElement.setAttribute('data-theme', theme);
+  updateThemeIcon(theme);
+}
+function updateThemeIcon(theme) {
+  const btn = document.getElementById('theme-toggle');
+  if (!btn) return;
+  if (theme === 'dark') {
+    btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+  } else {
+    btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+  }
+}
+document.getElementById('theme-toggle').onclick = () => {
+  const current = document.documentElement.getAttribute('data-theme');
+  const next = current === 'light' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('terra-theme', next);
+  updateThemeIcon(next);
+};
+
+// Auth
+function loadUser() {
+  const saved = localStorage.getItem('terra-user');
+  if (saved) {
+    currentUser = JSON.parse(saved);
+    showLoggedIn();
+  }
+}
+function showLoggedIn() {
+  document.getElementById('user-name').textContent = currentUser.name || currentUser.email.split('@')[0];
+  document.getElementById('user-email').textContent = currentUser.email;
+  document.getElementById('logout-btn').style.display = 'inline-block';
+  loadOrders();
+}
+function showGuest() {
+  currentUser = null;
+  document.getElementById('user-name').textContent = 'Guest';
+  document.getElementById('user-email').textContent = 'Sign in to track orders';
+  document.getElementById('logout-btn').style.display = 'none';
+  orders = [];
+  renderOrders();
+}
+document.getElementById('login-submit').onclick = () => {
+  const email = document.getElementById('login-email').value.trim();
+  const pass = document.getElementById('login-password').value;
+  if (!email || !pass) return alert('Please enter email and password');
+  // Check if user exists in local storage of accounts
+  const accounts = JSON.parse(localStorage.getItem('terra-accounts') || '{}');
+  if (accounts[email] && accounts[email].password !== pass) {
+    return alert('Incorrect password');
+  }
+  currentUser = { 
+    email, 
+    name: accounts[email]?.name || email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1) 
+  };
+  localStorage.setItem('terra-user', JSON.stringify(currentUser));
+  showLoggedIn();
+  showScreen('menu');
+  showToast('Welcome back!');
+};
+
+document.getElementById('show-signup').onclick = (e) => {
+  e.preventDefault();
+  showScreen('signup');
+};
+document.getElementById('show-login').onclick = (e) => {
+  e.preventDefault();
+  showScreen('login');
+};
+
+// Signup handler (script is at end of body, so DOM is ready)
+const signupBtn = document.getElementById('signup-submit');
+if (signupBtn) {
+  signupBtn.addEventListener('click', function() {
+    try {
+      const name = document.getElementById('signup-name').value.trim();
+      const email = document.getElementById('signup-email').value.trim();
+      const pass = document.getElementById('signup-password').value;
+      const confirm = document.getElementById('signup-confirm').value;
+
+      if (!name || !email || !pass || !confirm) {
+        alert('Please fill in all fields');
+        return;
+      }
+      if (!email.includes('@') || !email.includes('.')) {
+        alert('Please enter a valid email');
+        return;
+      }
+      if (pass.length < 6) {
+        alert('Password must be at least 6 characters');
+        return;
+      }
+      if (pass !== confirm) {
+        alert('Passwords do not match');
+        return;
+      }
+
+      const accounts = JSON.parse(localStorage.getItem('terra-accounts') || '{}');
+      if (accounts[email]) {
+        alert('An account with this email already exists');
+        return;
+      }
+
+      accounts[email] = { name, password: pass };
+      localStorage.setItem('terra-accounts', JSON.stringify(accounts));
+
+      currentUser = { email, name };
+      localStorage.setItem('terra-user', JSON.stringify(currentUser));
+      showLoggedIn();
+      showScreen('menu');
+      showToast('Account created! Welcome to Terra Coffee');
+    } catch (err) {
+      alert('Error: ' + err.message);
+      console.error(err);
+    }
+  });
+} else {
+  console.error('signup-submit button not found');
+}
+
+document.getElementById('guest-btn').onclick = () => {
+  showGuest();
+  showScreen('menu');
+};
+document.getElementById('logout-btn').onclick = () => {
+  localStorage.removeItem('terra-user');
+  showGuest();
+  showToast('Signed out');
+};
+document.getElementById('account-btn').onclick = () => {
+  if (currentUser) {
+    showScreen('account');
+  } else {
+    showScreen('login');
+  }
+};
+
+// Orders
+function loadOrders() {
+  if (!currentUser) return;
+  const key = 'terra-orders-' + currentUser.email;
+  orders = JSON.parse(localStorage.getItem(key) || '[]');
+  renderOrders();
+}
+function saveOrders() {
+  if (!currentUser) return;
+  const key = 'terra-orders-' + currentUser.email;
+  localStorage.setItem(key, JSON.stringify(orders));
+}
+function renderOrders() {
+  const container = document.getElementById('order-history');
+  const empty = document.getElementById('no-orders');
+  container.innerHTML = '';
+  if (orders.length === 0) {
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  orders.slice().reverse().forEach(order => {
+    const div = document.createElement('div');
+    div.className = 'order-card';
+    div.innerHTML = `
+      <h4>Order #${order.id}</h4>
+      <div class="date">${order.date}</div>
+      ${order.items.map(i => {
+        const c = [i.size, i.milk && i.milk !== "Whole" ? i.milk : null, i.sweet && i.sweet !== "None" ? i.sweet : null, i.temp].filter(Boolean).join(" · ");
+        return `<div class="order-item">${i.qty}× ${i.name}${c ? ` <span style="color:var(--muted);">(${c})</span>` : ""}</div>`;
+      }).join('')}
+      <div class="order-total">Total: $${order.total.toFixed(2)}</div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function renderProducts(filter = "all", search = "") {
+  const grid = document.getElementById("product-grid");
+  grid.innerHTML = "";
+  products
+    .filter(p => (filter === "all" || p.category === filter) && p.name.toLowerCase().includes(search.toLowerCase()))
+    .forEach(p => {
+      const card = document.createElement("div");
+      card.className = "product-card";
+      card.innerHTML = `
+        <img src="${p.image}" alt="${p.name}" style="width:100%; height:120px; object-fit:cover; background:#f0e8df;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="img-fallback" style="display:none; height:120px; background:linear-gradient(135deg,#e8dfd5,#f8f4ef); align-items:center; justify-content:center; color:#a0a0a0; font-size:12px;">☕</div>
+        <div class="product-info">
+          <h3>${p.name}</h3>
+          <span class="price">$${p.price.toFixed(2)}</span>
+          <button class="add-btn" onclick="quickAdd(${p.id}); event.stopPropagation();">+</button>
+        </div>
+      `;
+      card.onclick = () => openModal(p);
+      grid.appendChild(card);
+    });
+}
+
+function openModal(product) {
+  currentProduct = product;
+  selectedSize = "Regular";
+  selectedSizeMod = 0;
+  selectedMilk = "Whole";
+  selectedMilkMod = 0;
+  selectedSweet = "None";
+  selectedSweetMod = 0;
+  selectedTemp = "Hot";
+  qty = 1;
+  document.getElementById("modal-img").src = product.image;
+  document.getElementById("modal-name").textContent = product.name;
+  document.getElementById("modal-desc").textContent = product.desc;
+  document.getElementById("qty-display").textContent = qty;
+  // Reset selections
+  document.querySelectorAll(".size-btn, .option-btn").forEach(b => b.classList.remove("selected"));
+  document.querySelector("#size-group .size-btn").classList.add("selected");
+  document.querySelector("#milk-group .option-btn").classList.add("selected");
+  document.querySelector("#sweet-group .option-btn").classList.add("selected");
+  document.querySelector("#temp-group .option-btn").classList.add("selected");
+  updateModalPrice();
+  updateCustomSummary();
+  document.getElementById("product-modal").classList.add("active");
+}
+
+function updateModalPrice() {
+  if (!currentProduct) return;
+  const totalMod = selectedSizeMod + selectedMilkMod + selectedSweetMod;
+  const price = currentProduct.price + totalMod;
+  document.getElementById("modal-price").textContent = `$${price.toFixed(2)}`;
+}
+
+function updateCustomSummary() {
+  const parts = [selectedSize];
+  if (selectedMilk !== "Whole") parts.push(selectedMilk + " Milk");
+  else parts.push("Whole Milk");
+  if (selectedSweet !== "None") parts.push(selectedSweet);
+  parts.push(selectedTemp);
+  document.getElementById("custom-summary").textContent = parts.join(" · ");
+}
+
+function closeModal() {
+  document.getElementById("product-modal").classList.remove("active");
+}
+
+// Option selection handlers
+document.querySelectorAll("#size-group .size-btn").forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll("#size-group .size-btn").forEach(b => b.classList.remove("selected"));
+    btn.classList.add("selected");
+    selectedSize = btn.dataset.size;
+    selectedSizeMod = parseFloat(btn.dataset.mod);
+    updateModalPrice();
+    updateCustomSummary();
+  };
+});
+document.querySelectorAll("#milk-group .option-btn").forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll("#milk-group .option-btn").forEach(b => b.classList.remove("selected"));
+    btn.classList.add("selected");
+    selectedMilk = btn.dataset.milk;
+    selectedMilkMod = parseFloat(btn.dataset.mod);
+    updateModalPrice();
+    updateCustomSummary();
+  };
+});
+document.querySelectorAll("#sweet-group .option-btn").forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll("#sweet-group .option-btn").forEach(b => b.classList.remove("selected"));
+    btn.classList.add("selected");
+    selectedSweet = btn.dataset.sweet;
+    selectedSweetMod = parseFloat(btn.dataset.mod);
+    updateModalPrice();
+    updateCustomSummary();
+  };
+});
+document.querySelectorAll("#temp-group .option-btn").forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll("#temp-group .option-btn").forEach(b => b.classList.remove("selected"));
+    btn.classList.add("selected");
+    selectedTemp = btn.dataset.temp;
+    updateCustomSummary();
+  };
+});
+
+document.getElementById("qty-plus").onclick = () => { qty++; document.getElementById("qty-display").textContent = qty; };
+document.getElementById("qty-minus").onclick = () => { if (qty > 1) { qty--; document.getElementById("qty-display").textContent = qty; } };
+
+document.getElementById("modal-add").onclick = () => {
+  addToCart(currentProduct, {
+    size: selectedSize,
+    sizeMod: selectedSizeMod,
+    milk: selectedMilk,
+    milkMod: selectedMilkMod,
+    sweet: selectedSweet,
+    sweetMod: selectedSweetMod,
+    temp: selectedTemp
+  }, qty);
+  closeModal();
+  showToast("Added to cart");
+};
+
+function quickAdd(id) {
+  const p = products.find(x => x.id === id);
+  addToCart(p, {
+    size: "Regular",
+    sizeMod: 0,
+    milk: "Whole",
+    milkMod: 0,
+    sweet: "None",
+    sweetMod: 0,
+    temp: "Hot"
+  }, 1);
+  showToast("Added to cart");
+}
+
+function addToCart(product, customs, quantity) {
+  const price = product.price + (customs.sizeMod || 0) + (customs.milkMod || 0) + (customs.sweetMod || 0);
+  const key = `${product.id}-${customs.size}-${customs.milk}-${customs.sweet}-${customs.temp}`;
+  const existing = cart.find(i => i.key === key);
+  if (existing) {
+    existing.qty += quantity;
+  } else {
+    cart.push({
+      ...product,
+      key,
+      size: customs.size,
+      milk: customs.milk,
+      sweet: customs.sweet,
+      temp: customs.temp,
+      price,
+      qty: quantity
+    });
+  }
+  updateCart();
+}
+
+function updateCart() {
+  const container = document.getElementById("cart-items");
+  const empty = document.getElementById("cart-empty");
+  const totalRow = document.getElementById("cart-total-row");
+  const checkout = document.getElementById("checkout-btn");
+  const badge = document.getElementById("cart-badge");
+
+  container.innerHTML = "";
+  if (cart.length === 0) {
+    empty.style.display = "block";
+    totalRow.style.display = "none";
+    checkout.style.display = "none";
+    badge.style.display = "none";
+    return;
+  }
+  empty.style.display = "none";
+  totalRow.style.display = "flex";
+  checkout.style.display = "block";
+
+  let total = 0;
+  let count = 0;
+  cart.forEach((item, idx) => {
+    total += item.price * item.qty;
+    count += item.qty;
+    const div = document.createElement("div");
+    div.className = "cart-item";
+    const customs = [item.size, item.milk !== "Whole" ? item.milk + " Milk" : null, item.sweet !== "None" ? item.sweet : null, item.temp].filter(Boolean).join(" · ");
+    div.innerHTML = `
+      <img src="${item.image}" alt="">
+      <div class="cart-item-info">
+        <h4>${item.name}</h4>
+        <div style="font-size:12px; color:var(--muted);">${customs}</div>
+        <div class="item-price">$${item.price.toFixed(2)} × ${item.qty}</div>
+      </div>
+      <button onclick="removeFromCart(${idx})" style="background:none;border:none;color:var(--accent);font-size:20px;cursor:pointer;">×</button>
+    `;
+    container.appendChild(div);
+  });
+  document.getElementById("cart-total").textContent = `$${total.toFixed(2)}`;
+  badge.textContent = count;
+  badge.style.display = "flex";
+}
+
+function removeFromCart(idx) {
+  cart.splice(idx, 1);
+  updateCart();
+}
+
+document.getElementById("checkout-btn").onclick = () => {
+  if (cart.length === 0) return;
+  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  pendingOrder = {
+    items: cart.map(i => ({
+      name: i.name,
+      size: i.size,
+      milk: i.milk,
+      sweet: i.sweet,
+      temp: i.temp,
+      qty: i.qty,
+      price: i.price
+    })),
+    total
+  };
+  // Render summary on payment screen
+  const summary = document.getElementById("payment-summary");
+  summary.innerHTML = pendingOrder.items.map(i => {
+    const c = [i.size, i.milk !== "Whole" ? i.milk : null, i.sweet !== "None" ? i.sweet : null, i.temp].filter(Boolean).join(" · ");
+    return `<div style="font-size:13px; margin:4px 0;">${i.qty}× ${i.name} <span style="color:var(--muted);">(${c})</span></div>`;
+  }).join("") + `<div style="font-weight:700; margin-top:8px; color:var(--primary);">Total: $${total.toFixed(2)}</div>`;
+  showScreen("payment");
+};
+
+// Payment methods
+document.querySelectorAll(".payment-method").forEach(method => {
+  method.onclick = () => {
+    document.querySelectorAll(".payment-method").forEach(m => m.classList.remove("selected"));
+    method.classList.add("selected");
+    method.querySelector("input").checked = true;
+    const isCard = method.dataset.method === "card";
+    document.getElementById("card-form").classList.toggle("active", isCard);
+  };
+});
+
+document.getElementById("pay-btn").onclick = () => {
+  if (!pendingOrder) return;
+  const order = {
+    id: Date.now().toString().slice(-6),
+    date: new Date().toLocaleString(),
+    items: pendingOrder.items,
+    total: pendingOrder.total,
+    status: "Confirmed"
+  };
+  if (currentUser) {
+    orders.unshift(order);
+    saveOrders();
+    renderOrders();
+  }
+  // Success details
+  document.getElementById("success-details").innerHTML = `
+    <strong>Order #${order.id}</strong><br>
+    ${order.items.map(i => `${i.qty}× ${i.name}`).join("<br>")}
+    <div style="margin-top:8px; font-weight:700; color:var(--primary);">Paid $${order.total.toFixed(2)}</div>
+  `;
+  cart = [];
+  pendingOrder = null;
+  updateCart();
+  showScreen("success");
+  showToast("Payment successful!");
+};
+
+function showToast(msg) {
+  const toast = document.getElementById("toast");
+  toast.textContent = msg;
+  toast.style.display = "block";
+  setTimeout(() => toast.style.display = "none", 1800);
+}
+
+function showScreen(name) {
+  document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  const nav = document.querySelector(`.nav-item[data-screen="${name}"]`);
+  if (nav) nav.classList.add("active");
+  const screen = document.getElementById(name + "-screen");
+  if (screen) screen.classList.add("active");
+  if (name === 'account') loadOrders();
+}
+
+// Navigation
+document.querySelectorAll(".nav-item").forEach(item => {
+  item.onclick = () => showScreen(item.dataset.screen);
+});
+
+// Categories
+document.querySelectorAll(".cat-btn").forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    renderProducts(btn.dataset.cat, document.getElementById("search").value);
+  };
+});
+
+document.getElementById("search").oninput = (e) => {
+  const activeCat = document.querySelector(".cat-btn.active").dataset.cat;
+  renderProducts(activeCat, e.target.value);
+};
+
+// Rewards / QR Scan
+let userPoints = parseInt(localStorage.getItem('terra-points') || '420');
+function updatePointsDisplay() {
+  document.getElementById('points-display').textContent = userPoints;
+  const toFree = Math.max(0, 500 - userPoints);
+  document.getElementById('points-to-free').textContent = toFree + ' pts to free drink';
+  localStorage.setItem('terra-points', userPoints);
+}
+document.getElementById('simulate-scan').onclick = () => {
+  userPoints += 25;
+  updatePointsDisplay();
+  showToast('+25 points earned!');
+  // Animate a stamp fill if possible
+  const stamps = document.querySelectorAll('#stamps .stamp');
+  const nextEmpty = Array.from(stamps).find(s => !s.classList.contains('filled'));
+  if (nextEmpty) nextEmpty.classList.add('filled');
+};
+updatePointsDisplay();
+const stampsContainer = document.getElementById("stamps");
+for (let i = 0; i < 8; i++) {
+  const s = document.createElement("div");
+  s.className = "stamp" + (i < 5 ? " filled" : "");
+  s.textContent = i < 5 ? "☕" : "";
+  stampsContainer.appendChild(s);
+}
+
+document.getElementById('get-started').onclick = () => {
+  showScreen('menu');
+};
+
+// Directions
+let pendingAddress = '';
+let pendingName = '';
+function openDirections(address, name) {
+  pendingAddress = address;
+  pendingName = name;
+  document.getElementById('maps-modal').classList.add('active');
+}
+function closeMaps() {
+  document.getElementById('maps-modal').classList.remove('active');
+}
+function openMapApp(app) {
+  const q = encodeURIComponent(pendingAddress);
+  const name = encodeURIComponent(pendingName);
+  let url = '';
+  if (app === 'apple') {
+    url = `https://maps.apple.com/?q=${name}&address=${q}`;
+  } else if (app === 'google') {
+    url = `https://www.google.com/maps/search/?api=1&query=${q}`;
+  } else if (app === 'waze') {
+    url = `https://waze.com/ul?q=${q}&navigate=yes`;
+  }
+  if (url) window.open(url, '_blank');
+  closeMaps();
+}
+document.getElementById('maps-modal').onclick = (e) => {
+  if (e.target.id === 'maps-modal') closeMaps();
+};
+loadUser();
+renderProducts();
+updateCart();
+showScreen('onboard');
+</script>
+</body>
+</html>

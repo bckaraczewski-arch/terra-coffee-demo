@@ -1,0 +1,22 @@
+{
+  "name": "Terra Coffee",
+  "short_name": "Terra",
+  "description": "Warm, earthy coffee ordering app",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#F8F4EF",
+  "theme_color": "#C17A4A",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "imagine_images/7BTGC.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "imagine_images/7BTGC.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}
